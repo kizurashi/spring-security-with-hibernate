@@ -7,10 +7,13 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.PersistenceException;
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**
@@ -22,11 +25,14 @@ public abstract class HibernateSessionFactory<T> implements HibernateDao<T> {
 
     private static SessionFactory sessionFactory;
 
-    HibernateSessionFactory( SessionFactory sessionFactory ) {
+    Logger logger = LoggerFactory.getLogger( this.getClass() );
+
+
+    public void setSessionFactory(SessionFactory sessionFactory){
         this.sessionFactory = sessionFactory;
     }
 
-    public static SessionFactory getSessionFactory() {
+    public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 
@@ -34,18 +40,14 @@ public abstract class HibernateSessionFactory<T> implements HibernateDao<T> {
         return getSessionFactory().getCurrentSession();
     }
 
-    public static void shutdown() {
-        // Close caches and connection pools
-        getSessionFactory().close();
-    }
-
     public String getClazz() {
-        return clazz.getClass().getSimpleName();
+        String[] t = (((ParameterizedType)this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]).getTypeName().split("\\.");
+        return t[ t.length - 1 ];
     }
 
     @Override
     public List<T> getAll() {
-         Query query = getSession().createQuery( String.format( "from %s", getClazz() ) );
+        Query query = getSession().createQuery( String.format( "from %s", getClazz() ) );
         try {
             return query.list();
         } catch ( PersistenceException e ) {

@@ -5,16 +5,25 @@ import com.spring.security.dao.user.model.User;
 import com.spring.security.dao.user.role.UserRoleDao;
 import com.spring.security.dao.user.role.model.UserRole;
 import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * Created by Kizurashi on 2/12/2018.
  */
+@Transactional
 public class UserRoleDaoImpl extends HibernateSessionFactory<UserRole> implements UserRoleDao {
 
-    UserRoleDaoImpl() {
-        this.clazz = this.getClass();
+    Logger logger = LoggerFactory.getLogger( this.getClass() );
+
+    public UserRoleDaoImpl( SessionFactory sessionFactory ) {
+        super.setSessionFactory( sessionFactory );
+        getClazz();
     }
 
     @Override

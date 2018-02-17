@@ -2,17 +2,17 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
         http://www.springframework.org/schema/task
-        http://www.springframework.org/schema/task/spring-task.xsd">
+        http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/usersdb"/>
+        <property name="url" value="jdbc:mysql://localhost/spring"/>
         <property name="username" value="root"/>
-        <property name="password" value="secret"/>
+        <property name="password" value=""/>
     </bean>
 
     <bean id="sessionFactory"
@@ -21,13 +21,22 @@
         <property name="configLocation" value="classpath:hibernate.cfg.xml" />
     </bean>
 
+    <tx:annotation-driven/>
     <bean id="transactionManager"
           class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-    <bean class="com.spring.security.dao.user.impl.UserDaoImpl" name="userDao"/>
+    <bean class="com.spring.security.dao.user.impl.UserDaoImpl" name="userDao">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
 
-    <bean class="com.spring.security.dao.user.role.impl.UserRoleDaoImpl" name="userRoleDao"/>
+    <bean class="com.spring.security.dao.user.role.impl.UserRoleDaoImpl" name="userRoleDao">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
 
 </beans>
