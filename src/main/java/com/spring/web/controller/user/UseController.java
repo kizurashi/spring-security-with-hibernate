@@ -24,7 +24,7 @@ public class UseController {
     }
 
     @RequestMapping( value = "/{userId}", method = RequestMethod.GET )
-    public User getUserById( @RequestParam("userId") Integer userId ) {
+    public User getUserById( @PathVariable("userId") Integer userId ) {
         return userDao.getUser( userId );
     }
 
@@ -34,12 +34,12 @@ public class UseController {
     }
 
     @RequestMapping( value = "/{userId}", method = RequestMethod.DELETE )
-    public void deleteUser( @RequestParam("userId") Integer userId ) {
+    public void deleteUser( @PathVariable("userId") Integer userId ) {
         userDao.deleteUser( userId );
     }
 
     @RequestMapping( value = "/{userId}", method = RequestMethod.PUT )
-    public void updateUser( @RequestParam("userId") Integer userId, @RequestBody User user ) {
+    public void updateUser( @PathVariable("userId") Integer userId, @RequestBody User user ) {
         userDao.updateUser( userId, user );
     }
 }

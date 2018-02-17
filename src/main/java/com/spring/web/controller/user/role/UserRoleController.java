@@ -25,7 +25,7 @@ public class UserRoleController {
     }
 
     @RequestMapping( value = "/{userRoleId}", method = RequestMethod.GET )
-    public UserRole getUserById(@RequestParam("userRoleId") Integer userId ) {
+    public UserRole getUserById(@PathVariable("userRoleId") Integer userId ) {
         return userRoleDao.getUserRole( userId );
     }
 
@@ -35,12 +35,12 @@ public class UserRoleController {
     }
 
     @RequestMapping( value = "/{userRoleId}", method = RequestMethod.DELETE )
-    public void deleteUserRole( @RequestParam("userRoleId") Integer userId ) {
+    public void deleteUserRole( @PathVariable("userRoleId") Integer userId ) {
         userRoleDao.deleteUserRole( userId );
     }
 
     @RequestMapping( value = "/{userRoleId}", method = RequestMethod.PUT )
-    public void updateUserRole( @RequestParam("userRoleId") Integer userId, @RequestBody UserRole userRole ) {
+    public void updateUserRole( @PathVariable("userRoleId") Integer userId, @RequestBody UserRole userRole ) {
         userRoleDao.updateUserRole( userId, userRole );
     }
 

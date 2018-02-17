@@ -1,6 +1,8 @@
 package com.spring.security.dao.user.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.spring.security.dao.user.role.model.UserRole;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.context.annotation.Primary;
@@ -16,8 +18,8 @@ import java.util.Set;
  * Created by Kizurashi on 2/12/2018.
  */
 @Entity
-@Table( name = "user" )
 @Transactional
+@Table( name = "user" )
 public class User implements Serializable {
 
     @Id
@@ -41,7 +43,7 @@ public class User implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @NotEmpty
-    @ManyToMany( fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH} )
+    @ManyToMany( fetch = FetchType.EAGER )
     @JoinTable(name = "user_privilegde",
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "role_id") })

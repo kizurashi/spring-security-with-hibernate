@@ -23,7 +23,6 @@ public class UserRoleDaoImpl extends HibernateSessionFactory<UserRole> implement
 
     public UserRoleDaoImpl( SessionFactory sessionFactory ) {
         super.setSessionFactory( sessionFactory );
-        getClazz();
     }
 
     @Override

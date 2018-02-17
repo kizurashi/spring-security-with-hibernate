@@ -1,5 +1,7 @@
 package com.spring.security.dao.user.role.model;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -8,6 +10,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table( name = "USER_PROFILE" )
+@JsonRootName(value = "USER_PROFILE")
 public class UserRole implements Serializable {
 
     @Id

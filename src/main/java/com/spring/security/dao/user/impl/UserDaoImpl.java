@@ -7,8 +7,11 @@ import com.spring.security.dao.user.role.UserRoleDao;
 import com.spring.security.dao.user.role.model.UserRole;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,10 +19,12 @@ import java.util.Set;
 /**
  * Created by Kizurashi on 2/12/2018.
  */
+@Transactional
 public class UserDaoImpl extends HibernateSessionFactory<User> implements UserDao {
 
     @Autowired
     UserRoleDao userRoleDao;
+    Logger logger = LoggerFactory.getLogger( this.getClass() );
 
     UserDaoImpl( SessionFactory sessionFactory ) {
         super.setSessionFactory( sessionFactory);
@@ -49,6 +54,7 @@ public class UserDaoImpl extends HibernateSessionFactory<User> implements UserDa
 
     @Override
     public User getUser(Integer userId) {
+        logger.warn(  super.get( userId ).toString() );
         return (User) super.get( userId );
     }
 
