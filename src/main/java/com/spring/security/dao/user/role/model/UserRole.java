@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by Kizurashi on 2/12/2018.
  */
-@Entity
+@Entity( name = "UserRole" )
 @Table( name = "USER_PROFILE" )
 @JsonRootName(value = "USER_PROFILE")
 public class UserRole implements Serializable {

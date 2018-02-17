@@ -17,7 +17,7 @@ import java.util.Set;
 /**
  * Created by Kizurashi on 2/12/2018.
  */
-@Entity
+@Entity( name = "User" )
 @Transactional
 @Table( name = "user" )
 public class User implements Serializable {

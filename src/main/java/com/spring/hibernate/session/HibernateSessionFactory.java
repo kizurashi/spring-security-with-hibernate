@@ -58,7 +58,7 @@ public abstract class HibernateSessionFactory<T> implements HibernateDao<T> {
     @Override
     public T get( Serializable var1 ) {
         logger.warn( getClazz() );
-        return (T) getSession().get( getClazz(), var1 );
+        return (T) getSession().get( getClazz(), 1 );
     }
 
     @Override

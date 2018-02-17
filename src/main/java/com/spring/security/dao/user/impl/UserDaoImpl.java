@@ -54,7 +54,6 @@ public class UserDaoImpl extends HibernateSessionFactory<User> implements UserDa
 
     @Override
     public User getUser(Integer userId) {
-        logger.warn(  super.get( userId ).toString() );
         return (User) super.get( userId );
     }
 
